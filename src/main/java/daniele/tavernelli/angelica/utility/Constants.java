@@ -25,6 +25,9 @@ public class Constants {
 	
 	//versione
 	public static final String desc_versione="0.2";
+	
+	//rest
+	public static final String rootRestPath="rest";
 
 	
 }

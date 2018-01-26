@@ -40,5 +40,19 @@ public class CollocazioneService {
 				"delete FROM collocazione WHERE id_collocazione = ?",
 				collocazione.getId_collocazione());
 	}
+	
+	public List<Collocazione> findCollocazioneByCollocazione(String collocazione) {
+		return  jdbcTemplate.query(
+				"SELECT * FROM collocazione WHERE collocazione=?",
+				(rs, rowNum) -> new Collocazione(rs.getLong("id_collocazione"),
+						rs.getString("collocazione"), rs.getString("piano"),rs.getString("stanza"),rs.getString("denominazione"),rs.getString("note")),collocazione);
+	}
+	
+	public List<Collocazione> findCollocazioneByContieneCollocazione(String collocazione) {
+		return  jdbcTemplate.query(
+				"SELECT * FROM collocazione WHERE collocazione like ?",
+				(rs, rowNum) -> new Collocazione(rs.getLong("id_collocazione"),
+						rs.getString("collocazione"), rs.getString("piano"),rs.getString("stanza"),rs.getString("denominazione"),rs.getString("note")), collocazione+"%");
+	}
 
 }

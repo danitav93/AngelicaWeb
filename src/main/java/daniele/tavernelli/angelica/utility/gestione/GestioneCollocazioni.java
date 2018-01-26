@@ -201,10 +201,10 @@ public class GestioneCollocazioni implements Serializable {
 						: collocazione.toLowerCase();
 				String filterLower = event.getValue()
 						.toLowerCase();
-				//cerco anche le collocazioni con i punti invec che con gli spazi e viceversa
+				//cerco anche le collocazioni con i punti invece che con gli spazi e viceversa
 				String nameLowerWithPointsInsteadOfWhiteSpaces = event.getValue().replace(" ",".").toLowerCase();
 				String nameLowerWithWhiteSpacesInsteadOfPoints = event.getValue().replace("."," ").toLowerCase();
-				return nameLower.contains(filterLower) || nameLower.contains(nameLowerWithPointsInsteadOfWhiteSpaces) || nameLower.contains(nameLowerWithWhiteSpacesInsteadOfPoints);
+				return nameLower.matches(filterLower+"(.*)") || nameLower.matches(nameLowerWithPointsInsteadOfWhiteSpaces+"(.*)") || nameLower.matches(nameLowerWithWhiteSpacesInsteadOfPoints+"(.*)");
 			});
 		});
 		cell.setComponent(filterCollocazione);
