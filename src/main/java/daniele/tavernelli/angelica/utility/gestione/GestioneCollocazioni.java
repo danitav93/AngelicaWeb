@@ -118,7 +118,7 @@ public class GestioneCollocazioni implements Serializable {
 								try {
 									serviceCollocazione.remove((Collocazione)clickEvent.getItem());
 									updateCollocazioneGridData();
-									log.info("Collocazione deleted: id_collocazione"+((Collocazione)clickEvent.getItem()).getId_collocazione()+" utente_id="+ userLogged.getUtente().getId_utente()+" username="+userLogged.getUtente().getUsername());
+									log.info("Collocazione deleted: id_collocazione "+((Collocazione)clickEvent.getItem()).getId_collocazione()+" utente_id="+ userLogged.getUtente().getId_utente()+" username="+userLogged.getUtente().getUsername());
 
 								} catch (Exception e) {
 									log.error("Errore collocazione deleted: id_collocazione"+((Collocazione)clickEvent.getItem()).getId_collocazione()+" utente_id="+ userLogged.getUtente().getId_utente()+" username="+userLogged.getUtente().getUsername(),e);

@@ -1,8 +1,14 @@
 package daniele.tavernelli.angelica.database.view;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class ViewUtente {
 
-	private Long id_utente,id_ruolo;
+	@Id
+	private Long id_utente;
+	private Long id_ruolo;
 	private String username,password,nome_ruolo;
 	
 	public ViewUtente() {

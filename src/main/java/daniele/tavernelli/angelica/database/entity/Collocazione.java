@@ -1,7 +1,21 @@
 package daniele.tavernelli.angelica.database.entity;
 
-public class Collocazione {
+import java.io.Serializable;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity(name="collocazione")
+@Table(name="collocazione")
+public class Collocazione implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+
+	@Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
 	private long id_collocazione;
 	
 	private String collocazione,piano,stanza,denominazione,note;

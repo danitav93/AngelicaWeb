@@ -8,6 +8,7 @@ C:\Users\Daniele Tavernelli\workspace-web\angelica\src\main\java\daniele\taverne
 C:\Users\Daniele Tavernelli\workspace-web\angelica\src\main\java\daniele\tavernelli\angelica\database\entity\Messaggio.java
 C:\Users\Daniele Tavernelli\workspace-web\angelica\src\main\java\daniele\tavernelli\angelica\utility\gestione\logIn\Authentication.java
 C:\Users\Daniele Tavernelli\workspace-web\angelica\src\main\java\daniele\tavernelli\angelica\utility\automathic\AutomathicExecution.java
+C:\Users\Daniele Tavernelli\workspace-web\angelica\src\main\java\daniele\tavernelli\angelica\rest\DataConverter.java
 C:\Users\Daniele Tavernelli\workspace-web\angelica\src\main\java\daniele\tavernelli\angelica\utility\broadcast\Broadcaster.java
 C:\Users\Daniele Tavernelli\workspace-web\angelica\src\main\java\daniele\tavernelli\angelica\utility\broadcast\MessageBuilder.java
 C:\Users\Daniele Tavernelli\workspace-web\angelica\src\main\java\daniele\tavernelli\angelica\utility\gestione\GestioneVisibilità.java
@@ -16,13 +17,17 @@ C:\Users\Daniele Tavernelli\workspace-web\angelica\src\main\java\daniele\taverne
 C:\Users\Daniele Tavernelli\workspace-web\angelica\src\main\java\daniele\tavernelli\angelica\utility\broadcast\Receiver.java
 C:\Users\Daniele Tavernelli\workspace-web\angelica\src\main\java\daniele\tavernelli\angelica\AngelicaApplication.java
 C:\Users\Daniele Tavernelli\workspace-web\angelica\src\main\java\daniele\tavernelli\angelica\utility\Constants.java
+C:\Users\Daniele Tavernelli\workspace-web\angelica\src\main\java\daniele\tavernelli\angelica\rest\model\ListCollocazioneModel.java
 C:\Users\Daniele Tavernelli\workspace-web\angelica\src\main\java\daniele\tavernelli\angelica\utility\layout\RowLayoutForChatGrid.java
 C:\Users\Daniele Tavernelli\workspace-web\angelica\src\main\java\daniele\tavernelli\angelica\logtest.java
+C:\Users\Daniele Tavernelli\workspace-web\angelica\src\main\java\daniele\tavernelli\angelica\database\repository\CollocazioneRepository.java
 C:\Users\Daniele Tavernelli\workspace-web\angelica\src\main\java\daniele\tavernelli\angelica\vaadin\Ui.java
 C:\Users\Daniele Tavernelli\workspace-web\angelica\src\main\java\daniele\tavernelli\angelica\utility\automathic\AutomathicTaskExecutor.java
 C:\Users\Daniele Tavernelli\workspace-web\angelica\src\main\java\daniele\tavernelli\angelica\vaadin\InfoView.java
+C:\Users\Daniele Tavernelli\workspace-web\angelica\src\main\java\daniele\tavernelli\angelica\rest\controller\CollocazioneController.java
 C:\Users\Daniele Tavernelli\workspace-web\angelica\src\main\java\daniele\tavernelli\angelica\utility\LoggedUserVerticalLayout.java
 C:\Users\Daniele Tavernelli\workspace-web\angelica\src\main\java\daniele\tavernelli\angelica\utility\gestione\logIn\UserLogged.java
+C:\Users\Daniele Tavernelli\workspace-web\angelica\src\main\java\daniele\tavernelli\angelica\rest\model\CollocazioneModel.java
 C:\Users\Daniele Tavernelli\workspace-web\angelica\src\main\java\daniele\tavernelli\angelica\vaadin\MainView.java
 C:\Users\Daniele Tavernelli\workspace-web\angelica\src\main\java\daniele\tavernelli\angelica\database\entity\Utente.java
 C:\Users\Daniele Tavernelli\workspace-web\angelica\src\main\java\daniele\tavernelli\angelica\database\entity\Ruolo.java
@@ -32,5 +37,6 @@ C:\Users\Daniele Tavernelli\workspace-web\angelica\src\main\java\daniele\taverne
 C:\Users\Daniele Tavernelli\workspace-web\angelica\src\main\java\daniele\tavernelli\angelica\utility\gestione\GestioneCollocazioni.java
 C:\Users\Daniele Tavernelli\workspace-web\angelica\src\main\java\daniele\tavernelli\angelica\database\view\ViewUtente.java
 C:\Users\Daniele Tavernelli\workspace-web\angelica\src\main\java\daniele\tavernelli\angelica\utility\layout\ButtonForChat.java
+C:\Users\Daniele Tavernelli\workspace-web\angelica\target\generated-sources\java\daniele\tavernelli\angelica\database\entity\QRuolo.java
 C:\Users\Daniele Tavernelli\workspace-web\angelica\src\main\java\daniele\tavernelli\angelica\vaadin\VaadinLogInView.java
 C:\Users\Daniele Tavernelli\workspace-web\angelica\src\main\java\daniele\tavernelli\angelica\utility\automathic\DeleteMessageAutomathicTask.java

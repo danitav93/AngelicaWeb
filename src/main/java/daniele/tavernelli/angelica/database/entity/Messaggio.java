@@ -2,10 +2,18 @@ package daniele.tavernelli.angelica.database.entity;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
+@Entity
 public class Messaggio {
 
-	private Long id_messaggio,id_mittente,id_destinatario;
+	@Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+	private Long id_messaggio;
+	private Long id_mittente,id_destinatario;
 	private Date data;
 	private String body;
 	private int letto;

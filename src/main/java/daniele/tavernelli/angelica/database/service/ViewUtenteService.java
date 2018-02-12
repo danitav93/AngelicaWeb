@@ -4,15 +4,23 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
+import daniele.tavernelli.angelica.database.repository.ViewUtenteRepository;
 import daniele.tavernelli.angelica.database.view.ViewUtente;
 
-@Component
+@Service
 public class ViewUtenteService {
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+	
+	@Autowired
+	private ViewUtenteRepository viewUtenteRepository;
+	
+	public ViewUtente findByUsername(String username) {
+		return viewUtenteRepository.findByUsername(username);
+	}
 
 	public List<ViewUtente> findAll() {
 		return  jdbcTemplate.query(

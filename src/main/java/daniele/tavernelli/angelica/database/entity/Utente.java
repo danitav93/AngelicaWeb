@@ -1,7 +1,15 @@
 package daniele.tavernelli.angelica.database.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Utente {
 
+	@Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
 	private long id_utente;
 	
 	private String username,password;
