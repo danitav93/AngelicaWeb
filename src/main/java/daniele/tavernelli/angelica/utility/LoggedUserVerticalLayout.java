@@ -7,7 +7,7 @@ import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.MenuBar.MenuItem;
 import com.vaadin.ui.VerticalLayout;
 
-import daniele.tavernelli.angelica.database.view.ViewUtente;
+import daniele.tavernelli.angelica.database.entity.ViewUtente;
 
 public class LoggedUserVerticalLayout extends VerticalLayout {
 
@@ -25,7 +25,7 @@ public class LoggedUserVerticalLayout extends VerticalLayout {
 		
 		userItem.setIcon(VaadinIcons.USER);
 						
-		Label ruolo = new Label(utente.getNome_ruolo());
+		Label ruolo = new Label(utente.getNomeRuolo());
 
 		addComponent(userImageMenu);
 		addComponent(ruolo);		

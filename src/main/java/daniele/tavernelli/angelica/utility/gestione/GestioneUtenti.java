@@ -34,11 +34,11 @@ import com.vaadin.ui.renderers.ButtonRenderer;
 
 import daniele.tavernelli.angelica.database.entity.Ruolo;
 import daniele.tavernelli.angelica.database.entity.Utente;
+import daniele.tavernelli.angelica.database.entity.ViewUtente;
 import daniele.tavernelli.angelica.database.service.MessaggioService;
 import daniele.tavernelli.angelica.database.service.RuoloService;
 import daniele.tavernelli.angelica.database.service.UtenteService;
 import daniele.tavernelli.angelica.database.service.ViewUtenteService;
-import daniele.tavernelli.angelica.database.view.ViewUtente;
 import daniele.tavernelli.angelica.utility.Constants;
 import daniele.tavernelli.angelica.utility.LoggedUserVerticalLayout;
 import daniele.tavernelli.angelica.utility.LongNotification;
@@ -96,7 +96,7 @@ public class GestioneUtenti implements Serializable {
 
 	private Button saveUtenteButton;
 
-	public HashMap<Long, ButtonForChat> buttonForChatList;
+	public HashMap<Integer, ButtonForChat> buttonForChatList;
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@PostConstruct
@@ -116,7 +116,7 @@ public class GestioneUtenti implements Serializable {
 					String errore = checkUtente(event.getBean());
 					if (errore == null
 							&& this.viewUtenteService.update(event.getBean())) {
-						log.info("utente update: id_utente_updated "+event.getBean().getId_utente()+" utente_id="+ userLogged.getUtente().getId_utente()+" username="+userLogged.getUtente().getUsername());
+						log.info("utente update: id_utente_updated "+event.getBean().getIdUtente()+" utente_id="+ userLogged.getUtente().getIdUtente()+" username="+userLogged.getUtente().getUsername());
 						new LongNotification(
 								"Aggiornamento avvenuto con successo!",
 								Notification.Type.HUMANIZED_MESSAGE).show(Page
@@ -126,7 +126,7 @@ public class GestioneUtenti implements Serializable {
 						if (errore == null) {
 							errore = "Errore durante l'aggiornamento";
 						}
-						log.error("errore utente update: id_utente_updated "+event.getBean().getId_utente()+" utente_id="+ userLogged.getUtente().getId_utente()+" username="+userLogged.getUtente().getUsername());
+						log.error("errore utente update: id_utente_updated "+event.getBean().getIdUtente()+" utente_id="+ userLogged.getUtente().getIdUtente()+" username="+userLogged.getUtente().getUsername());
 						new LongNotification(errore,
 								Notification.Type.ERROR_MESSAGE).show(Page
 										.getCurrent());
@@ -152,13 +152,13 @@ public class GestioneUtenti implements Serializable {
 											updateUtenteGridData();
 											new LongNotification("Eliminazione avvenuta con successo",Notification.Type.HUMANIZED_MESSAGE).show(Page.getCurrent());;
 											log.info(" utente removed: id_utente_removed "+((ViewUtente) clickEvent
-													.getItem()).getId_utente()+" utente_id="+ userLogged.getUtente().getId_utente()+" username="+userLogged.getUtente().getUsername());
+													.getItem()).getIdUtente()+" utente_id="+ userLogged.getUtente().getIdUtente()+" username="+userLogged.getUtente().getUsername());
 
 										} catch (Exception e) {
 											e.printStackTrace();
 											new LongNotification("Errore durante l'eliminazione",Notification.Type.ERROR_MESSAGE).show(Page.getCurrent());;
 											log.error("errore utente update: id_utente_updated "+((ViewUtente) clickEvent
-													.getItem()).getId_utente()+" utente_id="+ userLogged.getUtente().getId_utente()+" username="+userLogged.getUtente().getUsername());
+													.getItem()).getIdUtente()+" utente_id="+ userLogged.getUtente().getIdUtente()+" username="+userLogged.getUtente().getUsername());
 
 										}
 									} else {
@@ -175,7 +175,7 @@ public class GestioneUtenti implements Serializable {
 				new ButtonRenderer(clickEvent -> {
 
 					try {
-						if (((ViewUtente) clickEvent.getItem()).getId_utente()!=userLogged.getUtente().getId_utente()) {
+						if (((ViewUtente) clickEvent.getItem()).getIdUtente()!=userLogged.getUtente().getIdUtente()) {
 							addChatButton((ViewUtente) clickEvent.getItem());
 						}
 					} catch (Exception e) {
@@ -188,9 +188,9 @@ public class GestioneUtenti implements Serializable {
 
 		utenteGrid.getEditor().setEnabled(true);
 
-		utenteGrid.getColumn("id_ruolo").setHidden(true);
+		utenteGrid.getColumn("idRuolo").setHidden(true);
 
-		utenteGrid.setColumnOrder("username", "password", "nome_ruolo",
+		utenteGrid.setColumnOrder("username", "password", "nome_ruolo","descFunc",
 				"remove");
 
 		updateUtenteGridData();
@@ -215,24 +215,24 @@ public class GestioneUtenti implements Serializable {
 	public void addChatButton(ViewUtente item) {
 
 		if (buttonForChatList == null) {
-			buttonForChatList = new HashMap<Long, ButtonForChat>();
+			buttonForChatList = new HashMap<Integer, ButtonForChat>();
 		}
 
-		if (!buttonForChatList.keySet().contains(item.getId_utente())) {
+		if (!buttonForChatList.keySet().contains(item.getIdUtente())) {
 
 			ButtonForChat buttonForChat = beanFactory.getBean(
 					ButtonForChat.class, item);
 
 			chatLayout.addComponent(buttonForChat);
 
-			buttonForChatList.put(item.getId_utente(), buttonForChat);
+			buttonForChatList.put(item.getIdUtente(), buttonForChat);
 
 		}
 
-		if (messaggioService.thereIsNewMessagge(userLogged.getUtente().getId_utente(),item.getId_utente())) {
-			buttonForChatList.get(item.getId_utente()).utenteName.setIcon(VaadinIcons.EXCLAMATION);
+		if (messaggioService.thereIsNewMessagge(userLogged.getUtente().getIdUtente(),item.getIdUtente())) {
+			buttonForChatList.get(item.getIdUtente()).utenteName.setIcon(VaadinIcons.EXCLAMATION);
 		} else {
-			buttonForChatList.get(item.getId_utente()).utenteName.setIcon(null);
+			buttonForChatList.get(item.getIdUtente()).utenteName.setIcon(null);
 		}
 
 	}
@@ -271,22 +271,36 @@ public class GestioneUtenti implements Serializable {
 		saveUtenteButton.addClickListener(clickEvent -> {
 			try {
 
-				ViewUtente utente = new ViewUtente(ruoloCombo.getSelectedItem()
-						.get().getId_ruolo(), usernameTxtField.getValue(),
-						passwordTxtField.getValue(), ruoloCombo
+				ViewUtente viewUtente = new ViewUtente();
+				viewUtente.setIdRuolo(ruoloCombo.getSelectedItem()
+						.get().getIdRuolo());
+				viewUtente.setUsername(usernameTxtField.getValue());
+				viewUtente.setPassword(passwordTxtField.getValue());
+				viewUtente.setNomeRuolo(ruoloCombo
 						.getSelectedItem().get().getNome());
-
-				String errore = checkUtente(utente);
+				
+				String errore = checkUtente(viewUtente);
 
 				if (errore == null) {
 
-					utenteService.save(new Utente(usernameTxtField.getValue(),
-							passwordTxtField.getValue(), ruoloCombo
-							.getSelectedItem().get().getId_ruolo()));
+					Ruolo ruolo = new Ruolo();
+					ruolo.setIdRuolo(ruoloCombo.getSelectedItem()
+							.get().getIdRuolo());
+					ruolo.setNome(ruoloCombo
+							.getSelectedItem().get().getNome());
+					
+					Utente utente = new Utente();
+					utente.setRuolo(ruolo);;
+					utente.setUsername(usernameTxtField.getValue());
+					utente.setPassword(passwordTxtField.getValue());
+					
+					
+					utenteService.save(utente);
+					
 					addUtenteSubWindow.close();
 					updateUtenteGridData();
 					
-					log.info("utente save: utente_id="+ userLogged.getUtente().getId_utente()+" username="+userLogged.getUtente().getUsername());
+					log.info("utente save: utente_id="+ userLogged.getUtente().getIdUtente()+" username="+userLogged.getUtente().getUsername());
 
 					new LongNotification("Salvataggio avvenuto con successo",
 							Notification.Type.HUMANIZED_MESSAGE).show(Page
@@ -372,8 +386,9 @@ public class GestioneUtenti implements Serializable {
 	 * @param item
 	 */
 	private void removeUtente(ViewUtente item) {
-		utenteService.remove(new Utente(item.getId_utente(),
-				item.getUsername(), item.getPassword(), item.getId_ruolo()));
+		Utente utente = new Utente();
+		utente.setIdUtente(item.getIdUtente());
+		utenteService.remove(utente);
 	}
 
 	/**
@@ -393,10 +408,10 @@ public class GestioneUtenti implements Serializable {
 			errore = Constants.passwordRule;
 		}
 
-		if (!ruoloIsOk(bean.getNome_ruolo())) {
+		if (!ruoloIsOk(bean.getNomeRuolo())) {
 			errore = Constants.ruoloRule;
 		} else {
-			updateBeanCodiRole(bean.getNome_ruolo(), bean);
+			updateBeanCodiRole(bean.getNomeRuolo(), bean);
 		}
 
 		return errore;
@@ -410,7 +425,7 @@ public class GestioneUtenti implements Serializable {
 	private void updateBeanCodiRole(String nome_ruolo, ViewUtente bean) {
 		for (Ruolo ruolo : ruoli) {
 			if (ruolo.getNome().equals(nome_ruolo)) {
-				bean.setId_ruolo(ruolo.getId_ruolo());
+				bean.setIdRuolo(ruolo.getIdRuolo());
 				return;
 			}
 		}
@@ -477,7 +492,7 @@ public class GestioneUtenti implements Serializable {
 		TextField roleTxtField = new TextField();
 
 		Binding<ViewUtente, String> roleBinding = binder.bind(roleTxtField,
-				ViewUtente::getNome_ruolo, ViewUtente::setNome_ruolo);
+				ViewUtente::getNomeRuolo, ViewUtente::setNomeRuolo);
 
 		utenteGrid.getColumn("nome_ruolo").setEditorBinding(roleBinding);
 

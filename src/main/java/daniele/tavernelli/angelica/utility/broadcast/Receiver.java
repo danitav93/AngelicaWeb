@@ -1,15 +1,14 @@
 package daniele.tavernelli.angelica.utility.broadcast;
 
 import java.io.Serializable;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
 
+import daniele.tavernelli.angelica.database.entity.ViewUtente;
 import daniele.tavernelli.angelica.database.service.ViewUtenteService;
-import daniele.tavernelli.angelica.database.view.ViewUtente;
 import daniele.tavernelli.angelica.utility.Constants;
 import daniele.tavernelli.angelica.utility.gestione.GestioneChat;
 import daniele.tavernelli.angelica.utility.gestione.GestioneUtenti;
@@ -49,7 +48,7 @@ public class Receiver implements Serializable {
 
 				long id_destinatario = Long.parseLong(messageSplitted[2]);
 
-				if (id_destinatario==userLogged.getUtente().getId_utente()) {
+				if (id_destinatario==userLogged.getUtente().getIdUtente()) {
 					notificaNuovoMessaggioRicevuto(id_mittente);
 				}
 
@@ -75,8 +74,8 @@ public class Receiver implements Serializable {
 			chatWindow.updateChatGridData(chatWindow.other);
 		}
 	
-		List<ViewUtente> viewUtenteList= viewUtenteService.findByIdUtente(id_mittente);
-		gestioneUtenti.addChatButton(viewUtenteList.get(0));
+		ViewUtente viewUtente= viewUtenteService.findByIdUtente(id_mittente);
+		gestioneUtenti.addChatButton(viewUtente);
 
 	}
 

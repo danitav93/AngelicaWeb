@@ -1,80 +1,92 @@
 package daniele.tavernelli.angelica.database.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import java.io.Serializable;
+import javax.persistence.*;
+import java.util.List;
 
+
+/**
+ * The persistent class for the utente database table.
+ * 
+ */
 @Entity
-public class Utente {
+@NamedQuery(name="Utente.findAll", query="SELECT u FROM Utente u")
+public class Utente implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	@Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-	private long id_utente;
-	
-	private String username,password;
-	
-	private long id_ruolo;
-	
-	
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id_utente")
+	private int idUtente;
+
+	private String password;
+
+	private String username;
+
+	//bi-directional many-to-one association to RelUtentiCloudMsgToken
+	@OneToMany(mappedBy="utente")
+	private List<RelUtentiCloudMsgToken> ListCloudMsgTokens;
+
+	//uni-directional many-to-one association to Ruolo
+	@ManyToOne
+	@JoinColumn(name="id_ruolo")
+	private Ruolo ruolo;
 
 	public Utente() {
-		super();
-	}
-	
-	
-	public Utente(String username, String password, long id_ruolo) {
-		super();
-		this.username = username;
-		this.password = password;
-		this.id_ruolo = id_ruolo;
 	}
 
-
-
-	public Utente(long id_utente, String username, String password, long id_ruolo) {
-		super();
-		this.id_utente = id_utente;
-		this.username = username;
-		this.password = password;
-		this.id_ruolo = id_ruolo;
+	public int getIdUtente() {
+		return this.idUtente;
 	}
 
-
-
-	public long getId_utente() {
-		return id_utente;
-	}
-
-	public void setId_utente(long id_utente) {
-		this.id_utente = id_utente;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
+	public void setIdUtente(int idUtente) {
+		this.idUtente = idUtente;
 	}
 
 	public String getPassword() {
-		return password;
+		return this.password;
 	}
 
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
-	public long getId_ruolo() {
-		return id_ruolo;
+	public String getUsername() {
+		return this.username;
 	}
 
-	public void setId_ruolo(long id_ruolo) {
-		this.id_ruolo = id_ruolo;
+	public void setUsername(String username) {
+		this.username = username;
 	}
-	
-	
-	
-	
+
+	public List<RelUtentiCloudMsgToken> getListCloudMsgTokens() {
+		return this.ListCloudMsgTokens;
+	}
+
+	public void setListCloudMsgTokens(List<RelUtentiCloudMsgToken> ListCloudMsgTokens) {
+		this.ListCloudMsgTokens = ListCloudMsgTokens;
+	}
+
+	public RelUtentiCloudMsgToken addListCloudMsgToken(RelUtentiCloudMsgToken ListCloudMsgToken) {
+		getListCloudMsgTokens().add(ListCloudMsgToken);
+		ListCloudMsgToken.setUtente(this);
+
+		return ListCloudMsgToken;
+	}
+
+	public RelUtentiCloudMsgToken removeListCloudMsgToken(RelUtentiCloudMsgToken ListCloudMsgToken) {
+		getListCloudMsgTokens().remove(ListCloudMsgToken);
+		ListCloudMsgToken.setUtente(null);
+
+		return ListCloudMsgToken;
+	}
+
+	public Ruolo getRuolo() {
+		return this.ruolo;
+	}
+
+	public void setRuolo(Ruolo ruolo) {
+		this.ruolo = ruolo;
+	}
+
 }

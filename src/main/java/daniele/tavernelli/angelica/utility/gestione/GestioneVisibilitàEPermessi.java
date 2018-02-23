@@ -16,7 +16,7 @@ import daniele.tavernelli.angelica.vaadin.Ui;
 
 @SpringComponent
 @UIScope
-public class GestioneVisibilità implements Serializable{
+public class GestioneVisibilitàEPermessi implements Serializable{
 
 	private static final long serialVersionUID = -4056217600060492044L;
 
@@ -46,7 +46,7 @@ public class GestioneVisibilità implements Serializable{
 
 	public void intoMain(MainView mainView) {
 
-		long ruolo = userLogged.getUtente().getId_ruolo();
+		long ruolo = userLogged.getUtente().getRuolo().getIdRuolo();
 
 		switch ((int)ruolo) {
 

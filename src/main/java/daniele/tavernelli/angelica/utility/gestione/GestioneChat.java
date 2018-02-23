@@ -29,8 +29,8 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 import daniele.tavernelli.angelica.database.entity.Messaggio;
+import daniele.tavernelli.angelica.database.entity.ViewUtente;
 import daniele.tavernelli.angelica.database.service.MessaggioService;
-import daniele.tavernelli.angelica.database.view.ViewUtente;
 import daniele.tavernelli.angelica.utility.LongNotification;
 import daniele.tavernelli.angelica.utility.broadcast.Broadcaster;
 import daniele.tavernelli.angelica.utility.broadcast.MessageBuilder;
@@ -128,10 +128,16 @@ public class GestioneChat extends Window{
 		inviaButton.addClickListener(f -> {
 
 			try {
-				messaggioService.save(new Messaggio(userLogged.getUtente().getId_utente(),other.getId_utente(),new Date(),textMessaggio.getValue(),0));
+				Messaggio messaggio = new Messaggio();
+				messaggio.setIdMittente(userLogged.getUtente().getIdUtente());
+				messaggio.setIdDestinatario(other.getIdUtente());
+				messaggio.setData(new Date());
+				messaggio.setBody(textMessaggio.getValue());
+				messaggio.setLetto(0);
+				messaggioService.save(messaggio);
 				textMessaggio.setValue("");
 				// Broadcast the message
-		        Broadcaster.broadcast(messageBuilder.createChatMessage(userLogged.getUtente().getId_utente(),other.getId_utente()));
+		        Broadcaster.broadcast(messageBuilder.createChatMessage(userLogged.getUtente().getIdUtente(),other.getIdUtente()));
 				if (other!=null) {
 					updateChatGridData(other);
 				}
@@ -160,18 +166,18 @@ public class GestioneChat extends Window{
 		
 		if (messaggi==null || messaggi.getItems()==null || messaggi.getItems().isEmpty()) {
 		
-			messaggiList= messaggioService.findByUtentiInChat(userLogged.getUtente().getId_utente(),other.getId_utente());
+			messaggiList= messaggioService.findByUtentiInChat(userLogged.getUtente().getIdUtente(),other.getIdUtente());
 			
 			messaggi = DataProvider.ofCollection(messaggiList);
 
 			
 		} else {
-			 messaggiList=messaggioService.findNewMessaggiRicevutiEInviati(userLogged.getUtente().getId_utente(),other.getId_utente());
+			 messaggiList=messaggioService.findNewMessaggiRicevutiEInviati(userLogged.getUtente().getIdUtente(),other.getIdUtente());
 			 messaggi.getItems().addAll(messaggiList);
 		}
 
 		for (Messaggio messaggio: messaggiList) {
-			if (messaggio.getLetto()==0 && messaggio.getId_destinatario()==userLogged.getUtente().getId_utente()) {
+			if (messaggio.getLetto()==0 && messaggio.getIdDestinatario()==userLogged.getUtente().getIdUtente()) {
 				messaggio.setLetto(1);
 				messaggioService.update(messaggio);
 			}

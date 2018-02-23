@@ -7,7 +7,7 @@ import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.VaadinSessionScope;
 
 import daniele.tavernelli.angelica.database.entity.Utente;
-import daniele.tavernelli.angelica.database.view.ViewUtente;
+import daniele.tavernelli.angelica.database.entity.ViewUtente;
 
 /**
  * class representig user logged bean

@@ -48,7 +48,7 @@ public class RowLayoutForChatGrid extends Label {
 		
 		String color="#000000";
 
-		if (messaggio.getId_mittente()==userLogged.getUtente().getId_utente()) {
+		if (messaggio.getIdMittente()==userLogged.getUtente().getIdUtente()) {
 			align="right";
 			color="#003399";
 		} 

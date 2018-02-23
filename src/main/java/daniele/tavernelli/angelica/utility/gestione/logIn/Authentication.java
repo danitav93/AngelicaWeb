@@ -9,9 +9,9 @@ import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.VaadinSessionScope;
 
 import daniele.tavernelli.angelica.database.entity.Utente;
+import daniele.tavernelli.angelica.database.entity.ViewUtente;
 import daniele.tavernelli.angelica.database.service.UtenteService;
 import daniele.tavernelli.angelica.database.service.ViewUtenteService;
-import daniele.tavernelli.angelica.database.view.ViewUtente;
 
 @SpringComponent
 @VaadinSessionScope
@@ -47,7 +47,7 @@ public class Authentication implements Serializable{
 			
 			utente=list.get(0) ;
 			
-			viewUtente = viewUtenteService.findByIdUtente(utente.getId_utente()).get(0);
+			viewUtente = viewUtenteService.findByIdUtente(utente.getIdUtente());
 			
 			if (!utente.getPassword().equals(password)) {
 				errore = "Credenziali errate";

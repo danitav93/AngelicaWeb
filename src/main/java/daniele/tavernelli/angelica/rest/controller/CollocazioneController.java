@@ -22,7 +22,7 @@ public class CollocazioneController {
 
 
 	@RequestMapping(value=START_URI,method=RequestMethod.GET)
-	public @ResponseBody List<Collocazione> viewCustomers(
+	public @ResponseBody List<Collocazione> getFilteredList(
 			@RequestParam(name = "page", defaultValue = "1") int pageNumber,
 			@RequestParam(name = "size", defaultValue = "10") int pageSize,
 			@RequestParam(name = "collocazione", defaultValue = "") String collocazione) {

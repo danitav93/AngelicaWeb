@@ -30,7 +30,7 @@ import daniele.tavernelli.angelica.utility.LoggedUserVerticalLayout;
 import daniele.tavernelli.angelica.utility.gestione.GestioneCollocazioni;
 import daniele.tavernelli.angelica.utility.gestione.GestioneLegenda;
 import daniele.tavernelli.angelica.utility.gestione.GestioneUtenti;
-import daniele.tavernelli.angelica.utility.gestione.GestioneVisibilità;
+import daniele.tavernelli.angelica.utility.gestione.GestioneVisibilitàEPermessi;
 import daniele.tavernelli.angelica.utility.gestione.logIn.UserLogged;
 
 
@@ -83,7 +83,7 @@ public class MainView extends VerticalLayout implements View {
 	private GestioneUtenti gestioneUtenti;
 
 	@Autowired
-	private GestioneVisibilità gestioneVisibilita;
+	private GestioneVisibilitàEPermessi gestioneVisibilita;
 
 	//ui
 	public MenuBar barmenu;
@@ -118,9 +118,9 @@ public class MainView extends VerticalLayout implements View {
 	 */
 	private void updateChatLayout() {
 		try{
-			List<Long> utentiMessaggiNonLetti = messaggioService.getUtentiMessaggiNonLetti(user.getUtente().getId_utente());
+			List<Long> utentiMessaggiNonLetti = messaggioService.getUtentiMessaggiNonLetti(user.getUtente().getIdUtente());
 			for (Long id:utentiMessaggiNonLetti) {
-				gestioneUtenti.addChatButton(viewUtenteService.findByIdUtente(id).get(0));
+				gestioneUtenti.addChatButton(viewUtenteService.findByIdUtente(id));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

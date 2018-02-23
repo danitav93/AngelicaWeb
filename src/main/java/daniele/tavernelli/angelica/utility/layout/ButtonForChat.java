@@ -9,8 +9,8 @@ import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 
+import daniele.tavernelli.angelica.database.entity.ViewUtente;
 import daniele.tavernelli.angelica.database.service.MessaggioService;
-import daniele.tavernelli.angelica.database.view.ViewUtente;
 import daniele.tavernelli.angelica.utility.gestione.GestioneChat;
 import daniele.tavernelli.angelica.utility.gestione.GestioneUtenti;
 import daniele.tavernelli.angelica.utility.gestione.logIn.UserLogged;
@@ -69,7 +69,7 @@ public class ButtonForChat extends HorizontalLayout {
 		closeButton.addClickListener(e -> {
 
 			gestioneUtenti.getChatLayout().removeComponent(this);
-			gestioneUtenti.buttonForChatList.remove(other.getId_utente());
+			gestioneUtenti.buttonForChatList.remove(other.getIdUtente());
 
 		});
 

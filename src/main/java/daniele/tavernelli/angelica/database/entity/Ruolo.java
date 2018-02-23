@@ -1,44 +1,54 @@
 package daniele.tavernelli.angelica.database.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import java.io.Serializable;
+import javax.persistence.*;
 
+
+/**
+ * The persistent class for the ruolo database table.
+ * 
+ */
 @Entity
-public class Ruolo {
+@NamedQuery(name="Ruolo.findAll", query="SELECT r FROM Ruolo r")
+public class Ruolo implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	@Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-	private Long id_ruolo;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id_ruolo")
+	private int idRuolo;
+
+	@Lob
+	@Column(name="desc_func")
+	private String descFunc;
+
 	private String nome;
-	
+
 	public Ruolo() {
-		super();
 	}
-	
-	public Ruolo(String nome) {
-		super();
-		this.nome = nome;
+
+	public int getIdRuolo() {
+		return this.idRuolo;
 	}
-	
-	public Ruolo(Long id_ruolo, String nome) {
-		super();
-		this.id_ruolo = id_ruolo;
-		this.nome = nome;
+
+	public void setIdRuolo(int idRuolo) {
+		this.idRuolo = idRuolo;
 	}
-	public Long getId_ruolo() {
-		return id_ruolo;
+
+	public String getDescFunc() {
+		return this.descFunc;
 	}
-	public void setId_ruolo(Long id_ruolo) {
-		this.id_ruolo = id_ruolo;
+
+	public void setDescFunc(String descFunc) {
+		this.descFunc = descFunc;
 	}
+
 	public String getNome() {
-		return nome;
+		return this.nome;
 	}
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
-	
+
 }

@@ -3,48 +3,37 @@ package daniele.tavernelli.angelica.database.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-
-import com.vaadin.spring.annotation.SpringComponent;
+import org.springframework.stereotype.Service;
 
 import daniele.tavernelli.angelica.database.entity.Utente;
+import daniele.tavernelli.angelica.database.repository.UtenteRepository;
 
-@SpringComponent
+@Service
 public class UtenteService {
 
+	
+	
 	@Autowired
-	private  JdbcTemplate jdbcTemplate;
+	private UtenteRepository utenteRepository;
 
 	public List<Utente> findAll() {
-		return  jdbcTemplate.query(
-				"SELECT * FROM utente",
-				(rs, rowNum) -> new Utente(rs.getLong("id_utente"),
-						rs.getString("username"), rs.getString("password"), rs.getLong("id_ruolo")));
+		return  (List<Utente>) utenteRepository.findAll();
 	}
 
 	public void update(Utente utente) {
-		jdbcTemplate.update(
-				"UPDATE utente SET username=?,password=?,id_ruolo=? WHERE id_utente=?",
-				utente.getUsername(), utente.getPassword(),utente.getId_ruolo(), utente.getId_ruolo());
+		utenteRepository.save(utente);
 	}
 	
 	public void save(Utente utente) {
-		jdbcTemplate.update(
-				"INSERT INTO utente (username,password,id_ruolo) VALUES (?,?,?)",
-				utente.getUsername(), utente.getPassword(), utente.getId_ruolo());
+		utenteRepository.save(utente);
 	}
 	
-	public void remove(Utente legenda) {
-		jdbcTemplate.update(
-				"delete FROM utente WHERE id_utente = ?",
-				legenda.getId_utente());
+	public void remove(Utente utente) {
+		utenteRepository.delete(utente);
 	}
 
 	public List<Utente> findUtenteByUserName(String username) {
-		return  jdbcTemplate.query(
-				"SELECT * FROM utente where username=?",
-				(rs, rowNum) -> new Utente(rs.getLong("id_utente"),
-						rs.getString("username"), rs.getString("password"), rs.getLong("id_ruolo")),username);
+		return  utenteRepository.findByUsername(username);
 		
 	}
 

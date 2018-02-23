@@ -10,7 +10,7 @@ public class DataConverter {
 
 	public CollocazioneModel getCollocazioneModel(Collocazione collocazione) {
 
-		return new CollocazioneModel(collocazione.getId_collocazione(),
+		return new CollocazioneModel(collocazione.getIdCollocazione(),
 				collocazione.getCollocazione(),
 				collocazione.getPiano(),
 				collocazione.getStanza(),

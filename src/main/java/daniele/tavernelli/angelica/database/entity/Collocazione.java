@@ -1,92 +1,58 @@
 package daniele.tavernelli.angelica.database.entity;
 
 import java.io.Serializable;
+import javax.persistence.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
+/**
+ * The persistent class for the collocazione database table.
+ * 
+ */
 @Entity(name="collocazione")
-@Table(name="collocazione")
-public class Collocazione implements Serializable{
-
+public class Collocazione implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-	private long id_collocazione;
-	
-	private String collocazione,piano,stanza,denominazione,note;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id_collocazione")
+	private int idCollocazione;
 
-	
-	
+	@Lob
+	private String collocazione;
+
+	@Lob
+	private String denominazione;
+
+	@Lob
+	private String note;
+
+	@Lob
+	private String piano;
+
+	@Lob
+	private String stanza;
+
 	public Collocazione() {
 	}
 
-
-
-	public Collocazione(String collocazione, String piano, String stanza,
-			String denominazione, String note) {
-		super();
-		this.collocazione = collocazione;
-		this.piano = piano;
-		this.stanza = stanza;
-		this.denominazione = denominazione;
-		this.note = note;
-	}
-	
-	
-
-	public Collocazione(long id_collocazione, String collocazione,
-			String piano, String stanza, String denominazione,
-			String note) {
-		super();
-		this.id_collocazione = id_collocazione;
-		this.collocazione = collocazione;
-		this.piano = piano;
-		this.stanza = stanza;
-		this.denominazione = denominazione;
-		this.note = note;
+	public int getIdCollocazione() {
+		return this.idCollocazione;
 	}
 
-
-
-	public long getId_collocazione() {
-		return id_collocazione;
-	}
-
-	public void setId_collocazione(long id_collocazione) {
-		this.id_collocazione = id_collocazione;
+	public void setIdCollocazione(int idCollocazione) {
+		this.idCollocazione = idCollocazione;
 	}
 
 	public String getCollocazione() {
-		return collocazione;
+		return this.collocazione;
 	}
 
 	public void setCollocazione(String collocazione) {
 		this.collocazione = collocazione;
 	}
 
-	public String getPiano() {
-		return piano;
-	}
-
-	public void setPiano(String piano) {
-		this.piano = piano;
-	}
-
-	public String getStanza() {
-		return stanza;
-	}
-
-	public void setStanza(String stanza) {
-		this.stanza = stanza;
-	}
-
 	public String getDenominazione() {
-		return denominazione;
+		return this.denominazione;
 	}
 
 	public void setDenominazione(String denominazione) {
@@ -94,13 +60,27 @@ public class Collocazione implements Serializable{
 	}
 
 	public String getNote() {
-		return note;
+		return this.note;
 	}
 
 	public void setNote(String note) {
 		this.note = note;
 	}
-	
-	
-	
+
+	public String getPiano() {
+		return this.piano;
+	}
+
+	public void setPiano(String piano) {
+		this.piano = piano;
+	}
+
+	public String getStanza() {
+		return this.stanza;
+	}
+
+	public void setStanza(String stanza) {
+		this.stanza = stanza;
+	}
+
 }

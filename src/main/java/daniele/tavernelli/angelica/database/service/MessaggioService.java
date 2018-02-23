@@ -4,68 +4,54 @@ package daniele.tavernelli.angelica.database.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.jdbc.core.JdbcTemplate;
-
-import com.vaadin.spring.annotation.SpringComponent;
+import org.springframework.stereotype.Service;
 
 import daniele.tavernelli.angelica.database.entity.Messaggio;
+import daniele.tavernelli.angelica.database.repository.MessaggioRepository;
 
 
-@SpringComponent
+@Service
 public class MessaggioService {
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+	
+	@Autowired
+	private MessaggioRepository messaggioRepository;
 
 	public List<Messaggio> findAll() {
-		return  jdbcTemplate.query(
-				"SELECT * FROM messaggio",
-				(rs, rowNum) -> new Messaggio(rs.getLong("id_messaggio"),rs.getLong("id_mittente"),rs.getLong("id_destinatario"),
-						rs.getTimestamp("data"), rs.getString("body"),rs.getInt("letto")));
+		return  (List<Messaggio>) messaggioRepository.findAll();
 	}
 
 	public void update(Messaggio messaggio) {
-		jdbcTemplate.update(
-				"UPDATE messaggio SET id_mittente=?,id_destinatario=?,data=?,body=?,letto=? WHERE id_messaggio=?",
-				messaggio.getId_mittente(), messaggio.getId_destinatario(), messaggio.getData(), messaggio.getBody(), messaggio.getLetto(),messaggio.getId_messaggio());
+		messaggioRepository.save(messaggio);
 	}
 	
 	public void save(Messaggio messaggio) {
-		jdbcTemplate.update(
-				"INSERT INTO messaggio (id_mittente,id_destinatario,data,body,letto) VALUES (?,?,?,?,?)",
-				messaggio.getId_mittente(), messaggio.getId_destinatario(), messaggio.getData(), messaggio.getBody(), messaggio.getLetto());
+		messaggioRepository.save(messaggio);
 	}
 	
 	public void remove(Messaggio messaggio) {
-		jdbcTemplate.update(
-				"delete FROM messaggio WHERE id_Messaggio = ?",
-				messaggio.getId_messaggio());
+		messaggioRepository.delete(messaggio);
 	}
 
-	public List<Messaggio> findByUtentiInChat(long id_mittente, Long id_destinatario) {
-		return  jdbcTemplate.query(
-				"SELECT * FROM messaggio where (id_mittente=? OR id_destinatario=?) AND (id_mittente=? OR id_destinatario=?) ORDER BY data",
-				(rs, rowNum) -> new Messaggio(rs.getLong("id_messaggio"),rs.getLong("id_mittente"),rs.getLong("id_destinatario"),
-						rs.getTimestamp("data"), rs.getString("body"),rs.getInt("letto")),id_mittente,id_mittente,id_destinatario,id_destinatario);
+	public List<Messaggio> findByUtentiInChat(int id_mittente, int id_destinatario) {
+		return messaggioRepository.findByMittenteDestinatario(id_mittente, id_destinatario);
 	}
 
-	public List<Messaggio> findNewMessaggiRicevutiEInviati(long me, Long other) {
-		return  jdbcTemplate.query(
-				"SELECT * FROM messaggio where ((id_mittente=? OR id_destinatario=?) AND (id_mittente=? OR id_destinatario=?)) AND letto=0 ORDER BY data",
-				(rs, rowNum) -> new Messaggio(rs.getLong("id_messaggio"),rs.getLong("id_mittente"),rs.getLong("id_destinatario"),
-						rs.getTimestamp("data"), rs.getString("body"),rs.getInt("letto")),other,other,me,me);
-		
+	public List<Messaggio> findNewMessaggiRicevutiEInviati(int me, int other) {
+		return messaggioRepository.findNewMessaggiRicevutiEInviati(me, other);
 	}
 	
-	public List<Messaggio> findNewMessaggiRicevuti(long me, Long other) {
-		return  jdbcTemplate.query(
-				"SELECT * FROM messaggio where (id_mittente=? ) AND ( id_destinatario=?) AND letto=0 ORDER BY data",
-				(rs, rowNum) -> new Messaggio(rs.getLong("id_messaggio"),rs.getLong("id_mittente"),rs.getLong("id_destinatario"),
-						rs.getTimestamp("data"), rs.getString("body"),rs.getInt("letto")),other,me);
+	public List<Messaggio> findNewMessaggiRicevuti(int me, int other) {
+		return  messaggioRepository.findNewMessaggiRicevuti(me, other);
 		
 	}
 
-	public boolean thereIsNewMessagge(long me, Long other) {
+	public boolean thereIsNewMessagge(int me, int other) {
 		List<Messaggio> messaggionLetti =findNewMessaggiRicevuti(me,other); 
 		return messaggionLetti!=null && messaggionLetti.size()>0;
 	}
@@ -82,6 +68,17 @@ public class MessaggioService {
 				"delete FROM messaggio "
 				);
 		
+	}
+
+	public List<Messaggio> getPage(int pageNumber, int pageSize, int mittente, int destinatario) {
+
+		PageRequest request = new PageRequest(pageNumber - 1, pageSize, Sort.Direction.ASC, "data");
+
+		return messaggioRepository.findByMittenteDestinatario(mittente,destinatario,request);
+	}
+
+	public Messaggio getMessaggio(long id_messaggio) {
+		return messaggioRepository.findOne(id_messaggio);
 	}
 
 }

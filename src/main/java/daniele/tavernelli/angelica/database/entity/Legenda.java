@@ -1,59 +1,54 @@
 package daniele.tavernelli.angelica.database.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import java.io.Serializable;
+import javax.persistence.*;
 
+
+/**
+ * The persistent class for the legenda database table.
+ * 
+ */
 @Entity
-public class Legenda {
+@NamedQuery(name="Legenda.findAll", query="SELECT l FROM Legenda l")
+public class Legenda implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	@Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-	private long id_legenda;
-	private byte[] simbolo;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id_legenda")
+	private int idLegenda;
+
+	@Lob
 	private String codifica;
-	
+
+	@Lob
+	private byte[] simbolo;
+
 	public Legenda() {
-		super();
 	}
 
-	public Legenda(byte[] simbolo, String codifica) {
-		super();
-		this.simbolo = simbolo;
-		this.codifica = codifica;
-	}
-	
-	
-	
-	public Legenda(long id_legenda, byte[] simbolo, String codifica) {
-		super();
-		this.id_legenda = id_legenda;
-		this.simbolo = simbolo;
-		this.codifica = codifica;
+	public int getIdLegenda() {
+		return this.idLegenda;
 	}
 
-	public long getId_legenda() {
-		return id_legenda;
+	public void setIdLegenda(int idLegenda) {
+		this.idLegenda = idLegenda;
 	}
-	public void setId_legenda(long id_legenda) {
-		this.id_legenda = id_legenda;
-	}
-	public byte[] getSimbolo() {
-		return simbolo;
-	}
-	public void setSimbolo(byte[] simbolo) {
-		this.simbolo = simbolo;
-	}
+
 	public String getCodifica() {
-		return codifica;
+		return this.codifica;
 	}
+
 	public void setCodifica(String codifica) {
 		this.codifica = codifica;
 	}
-	
-	
 
-	
-	
+	public byte[] getSimbolo() {
+		return this.simbolo;
+	}
+
+	public void setSimbolo(byte[] simbolo) {
+		this.simbolo = simbolo;
+	}
+
 }

@@ -24,7 +24,7 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
 import daniele.tavernelli.angelica.utility.LongNotification;
-import daniele.tavernelli.angelica.utility.gestione.GestioneVisibilità;
+import daniele.tavernelli.angelica.utility.gestione.GestioneVisibilitàEPermessi;
 import daniele.tavernelli.angelica.utility.gestione.logIn.Authentication;
 import daniele.tavernelli.angelica.utility.gestione.logIn.UserLogged;
 
@@ -37,7 +37,7 @@ public class VaadinLogInView extends VerticalLayout implements View{
 	Authentication authentication;
 	
 	@Autowired
-	GestioneVisibilità gestioneVisibilità;
+	GestioneVisibilitàEPermessi gestioneVisibilità;
 	
 	@Autowired
 	UserLogged userLogged;
@@ -89,7 +89,7 @@ public class VaadinLogInView extends VerticalLayout implements View{
 		 
 		            getUI().getNavigator().navigateTo( MainView.NAME);
 		            
-		            log.info("login succeded: utente_id="+ userLogged.getUtente().getId_utente()+" username="+userLogged.getUtente().getUsername());
+		            log.info("login succeded: utente_id="+ userLogged.getUtente().getIdUtente()+" username="+userLogged.getUtente().getUsername());
 						
 		        }else{
 		

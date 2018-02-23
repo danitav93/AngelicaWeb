@@ -96,11 +96,11 @@ public class GestioneLegenda implements Serializable {
 		legendaGrid.getEditor().addSaveListener(event -> {
 			try {
 				serviceLegenda.update(event.getBean());
-				log.info("Legenda updated: id_legenda"+event.getBean().getId_legenda()+" utente_id="+ userLogged.getUtente().getId_utente()+" username="+userLogged.getUtente().getUsername());
+				log.info("Legenda updated: id_legenda"+event.getBean().getIdLegenda()+" utente_id="+ userLogged.getUtente().getIdUtente()+" username="+userLogged.getUtente().getUsername());
 			} catch (Exception e) {
 				e.printStackTrace();
 				new LongNotification("Errore durante l'aggiornamento",Notification.Type.ERROR_MESSAGE).show(Page.getCurrent());;
-				log.error("Legenda updated: id_legenda"+event.getBean().getId_legenda()+" utente_id="+ userLogged.getUtente().getId_utente()+" username="+userLogged.getUtente().getUsername());
+				log.error("Legenda updated: id_legenda"+event.getBean().getIdLegenda()+" utente_id="+ userLogged.getUtente().getIdUtente()+" username="+userLogged.getUtente().getUsername());
 
 			}
 		});
@@ -126,11 +126,11 @@ public class GestioneLegenda implements Serializable {
 								try {
 									serviceLegenda.remove((Legenda)clickEvent.getItem());
 									updateLegendaGridData();
-									log.info("Legenda removed: id_legenda"+((Legenda)clickEvent.getItem()).getId_legenda()+" utente_id="+ userLogged.getUtente().getId_utente()+" username="+userLogged.getUtente().getUsername());
+									log.info("Legenda removed: id_legenda"+((Legenda)clickEvent.getItem()).getIdLegenda()+" utente_id="+ userLogged.getUtente().getIdUtente()+" username="+userLogged.getUtente().getUsername());
 
 								} catch (Exception e) {
 									e.printStackTrace();
-									log.error("errore Legenda removed: id_legenda"+((Legenda)clickEvent.getItem()).getId_legenda()+" utente_id="+ userLogged.getUtente().getId_utente()+" username="+userLogged.getUtente().getUsername());
+									log.error("errore Legenda removed: id_legenda"+((Legenda)clickEvent.getItem()).getIdLegenda()+" utente_id="+ userLogged.getUtente().getIdUtente()+" username="+userLogged.getUtente().getUsername());
 									new LongNotification("Errore durante l'eliminazione",Notification.Type.ERROR_MESSAGE).show(Page.getCurrent());;
 								}
 							} else {
@@ -293,21 +293,23 @@ public class GestioneLegenda implements Serializable {
 					new LongNotification("Inserire una codifica", Notification.Type.WARNING_MESSAGE).show(Page.getCurrent());
 					return;
 				}
-				Legenda legenda = new Legenda(Files.readAllBytes(file.toPath()),codifica.getValue());
+				Legenda legenda = new Legenda();
+				legenda.setSimbolo(Files.readAllBytes(file.toPath()));
+				legenda.setCodifica(codifica.getValue());			
 				if (isValid(legenda)) {
 
 					serviceLegenda.save(legenda);
 					addVoceLegendaSubWindow.close();
 					updateLegendaGridData();
 					new LongNotification("Salvataggio avvenuto con successo",Notification.Type.HUMANIZED_MESSAGE).show(Page.getCurrent());
-					log.info("Legenda saved: utente_id="+ userLogged.getUtente().getId_utente()+" username="+userLogged.getUtente().getUsername());
+					log.info("Legenda saved: utente_id="+ userLogged.getUtente().getIdUtente()+" username="+userLogged.getUtente().getUsername());
 					file=null;
 					codifica.setValue("");
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 				new LongNotification("Errore durante il salvataggio",Notification.Type.ERROR_MESSAGE).show(Page.getCurrent());
-				log.error("utente_id="+ userLogged.getUtente().getId_utente()+" username="+userLogged.getUtente().getUsername());
+				log.error("utente_id="+ userLogged.getUtente().getIdUtente()+" username="+userLogged.getUtente().getUsername());
 
 			}
 		});
