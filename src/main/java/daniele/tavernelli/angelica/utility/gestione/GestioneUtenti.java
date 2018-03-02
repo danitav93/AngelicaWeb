@@ -108,7 +108,7 @@ public class GestioneUtenti implements Serializable {
 
 		utenteGrid.setWidth("100%");
 
-		utenteGrid.getColumn("id_utente").setHidden(true);
+		utenteGrid.getColumn("idUtente").setHidden(true);
 
 		utenteGrid.getEditor().addSaveListener(
 				event -> {
@@ -116,7 +116,7 @@ public class GestioneUtenti implements Serializable {
 					String errore = checkUtente(event.getBean());
 					if (errore == null
 							&& this.viewUtenteService.update(event.getBean())) {
-						log.info("utente update: id_utente_updated "+event.getBean().getIdUtente()+" utente_id="+ userLogged.getUtente().getIdUtente()+" username="+userLogged.getUtente().getUsername());
+						log.info("utente update: idUtente_updated "+event.getBean().getIdUtente()+" utente_id="+ userLogged.getUtente().getIdUtente()+" username="+userLogged.getUtente().getUsername());
 						new LongNotification(
 								"Aggiornamento avvenuto con successo!",
 								Notification.Type.HUMANIZED_MESSAGE).show(Page
@@ -126,7 +126,7 @@ public class GestioneUtenti implements Serializable {
 						if (errore == null) {
 							errore = "Errore durante l'aggiornamento";
 						}
-						log.error("errore utente update: id_utente_updated "+event.getBean().getIdUtente()+" utente_id="+ userLogged.getUtente().getIdUtente()+" username="+userLogged.getUtente().getUsername());
+						log.error("errore utente update: idUtente_updated "+event.getBean().getIdUtente()+" utente_id="+ userLogged.getUtente().getIdUtente()+" username="+userLogged.getUtente().getUsername());
 						new LongNotification(errore,
 								Notification.Type.ERROR_MESSAGE).show(Page
 										.getCurrent());
@@ -151,13 +151,13 @@ public class GestioneUtenti implements Serializable {
 													.getItem());
 											updateUtenteGridData();
 											new LongNotification("Eliminazione avvenuta con successo",Notification.Type.HUMANIZED_MESSAGE).show(Page.getCurrent());;
-											log.info(" utente removed: id_utente_removed "+((ViewUtente) clickEvent
+											log.info(" utente removed: idUtente_removed "+((ViewUtente) clickEvent
 													.getItem()).getIdUtente()+" utente_id="+ userLogged.getUtente().getIdUtente()+" username="+userLogged.getUtente().getUsername());
 
 										} catch (Exception e) {
 											e.printStackTrace();
 											new LongNotification("Errore durante l'eliminazione",Notification.Type.ERROR_MESSAGE).show(Page.getCurrent());;
-											log.error("errore utente update: id_utente_updated "+((ViewUtente) clickEvent
+											log.error("errore utente update: idUtente_updated "+((ViewUtente) clickEvent
 													.getItem()).getIdUtente()+" utente_id="+ userLogged.getUtente().getIdUtente()+" username="+userLogged.getUtente().getUsername());
 
 										}
@@ -190,7 +190,7 @@ public class GestioneUtenti implements Serializable {
 
 		utenteGrid.getColumn("idRuolo").setHidden(true);
 
-		utenteGrid.setColumnOrder("username", "password", "nome_ruolo","descFunc",
+		utenteGrid.setColumnOrder("username", "password", "nomeRuolo","descFunc",
 				"remove");
 
 		updateUtenteGridData();
@@ -420,11 +420,11 @@ public class GestioneUtenti implements Serializable {
 	/**
 	 * update id_ruolo of bean based on nome ruolo
 	 * 
-	 * @param nome_ruolo
+	 * @param nomeRuolo
 	 */
-	private void updateBeanCodiRole(String nome_ruolo, ViewUtente bean) {
+	private void updateBeanCodiRole(String nomeRuolo, ViewUtente bean) {
 		for (Ruolo ruolo : ruoli) {
-			if (ruolo.getNome().equals(nome_ruolo)) {
+			if (ruolo.getNome().equals(nomeRuolo)) {
 				bean.setIdRuolo(ruolo.getIdRuolo());
 				return;
 			}
@@ -434,12 +434,12 @@ public class GestioneUtenti implements Serializable {
 	/**
 	 * rule of ruolo
 	 * 
-	 * @param nome_ruolo
+	 * @param nomeRuolo
 	 * @return
 	 */
-	private boolean ruoloIsOk(String nome_ruolo) {
+	private boolean ruoloIsOk(String nomeRuolo) {
 		for (Ruolo ruolo : ruoli) {
-			if (ruolo.getNome().equals(nome_ruolo)) {
+			if (ruolo.getNome().equals(nomeRuolo)) {
 				return true;
 			}
 		}
@@ -494,7 +494,7 @@ public class GestioneUtenti implements Serializable {
 		Binding<ViewUtente, String> roleBinding = binder.bind(roleTxtField,
 				ViewUtente::getNomeRuolo, ViewUtente::setNomeRuolo);
 
-		utenteGrid.getColumn("nome_ruolo").setEditorBinding(roleBinding);
+		utenteGrid.getColumn("nomeRuolo").setEditorBinding(roleBinding);
 
 	}
 

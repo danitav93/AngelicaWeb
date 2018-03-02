@@ -118,8 +118,8 @@ public class MainView extends VerticalLayout implements View {
 	 */
 	private void updateChatLayout() {
 		try{
-			List<Long> utentiMessaggiNonLetti = messaggioService.getUtentiMessaggiNonLetti(user.getUtente().getIdUtente());
-			for (Long id:utentiMessaggiNonLetti) {
+			List<Integer> utentiMessaggiNonLetti = messaggioService.getUtentiMessaggiNonLetti(user.getUtente().getIdUtente());
+			for (Integer id:utentiMessaggiNonLetti) {
 				gestioneUtenti.addChatButton(viewUtenteService.findByIdUtente(id));
 			}
 		} catch (Exception e) {

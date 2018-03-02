@@ -10,4 +10,6 @@ public interface  UtenteRepository extends PagingAndSortingRepository<Utente, Lo
 	
 	List<Utente> findByUsername(String username);
 
+	Utente findByIdUtente(int idUtente);
+
 }

@@ -33,15 +33,15 @@ public class ViewUtenteService {
 	}
 
 	
-	public ViewUtente findByIdUtente(long id) {
-		return  viewUtenteRepository.findOne(id);
+	public ViewUtente findByIdUtente(Integer id) {
+		return  viewUtenteRepository.findByIdUtente(id);
 	}
 
-	public List<ViewUtente> getListByRuolo(int idRuolo) {
+	public List<ViewUtente> getListByRuolo(Integer idRuolo) {
 		return viewUtenteRepository.findByIdRuolo(idRuolo);
 	}
 
-	public List<ViewUtente> getListByRuoloExceptThis(int id_ruolo, long id_utente_to_remove) {
+	public List<ViewUtente> getListByRuoloExceptThis(int id_ruolo, Integer id_utente_to_remove) {
 		return removeFromList(getListByRuolo(id_ruolo), id_utente_to_remove);
 	}
 
@@ -49,7 +49,7 @@ public class ViewUtenteService {
 		return removeFromList(findAll(), id_utente_to_remove);
 	}
 
-	public List<ViewUtente> removeFromList(List<ViewUtente> list, long id_utente) {
+	public List<ViewUtente> removeFromList(List<ViewUtente> list, Integer id_utente) {
 		ViewUtente toRemove=null;
 		for (ViewUtente viewUtente : list) {
 			if (id_utente == viewUtente.getIdUtente()) {

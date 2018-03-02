@@ -32,8 +32,6 @@ import daniele.tavernelli.angelica.database.entity.Messaggio;
 import daniele.tavernelli.angelica.database.entity.ViewUtente;
 import daniele.tavernelli.angelica.database.service.MessaggioService;
 import daniele.tavernelli.angelica.utility.LongNotification;
-import daniele.tavernelli.angelica.utility.broadcast.Broadcaster;
-import daniele.tavernelli.angelica.utility.broadcast.MessageBuilder;
 import daniele.tavernelli.angelica.utility.gestione.logIn.UserLogged;
 import daniele.tavernelli.angelica.utility.layout.RowLayoutForChatGrid;
 
@@ -58,8 +56,8 @@ public class GestioneChat extends Window{
 	@Autowired
 	private UserLogged userLogged;
 	
-	@Autowired 
-	MessageBuilder messageBuilder;
+	@Autowired
+	GestioneMessaggio gestioneMessaggio;
 
 	public ViewUtente other;
 
@@ -134,10 +132,11 @@ public class GestioneChat extends Window{
 				messaggio.setData(new Date());
 				messaggio.setBody(textMessaggio.getValue());
 				messaggio.setLetto(0);
-				messaggioService.save(messaggio);
+				messaggio = messaggioService.save(messaggio);
 				textMessaggio.setValue("");
 				// Broadcast the message
-		        Broadcaster.broadcast(messageBuilder.createChatMessage(userLogged.getUtente().getIdUtente(),other.getIdUtente()));
+				gestioneMessaggio.inviaMessaggio(messaggio.getIdMittente(), messaggio.getIdDestinatario(), messaggio.getIdMessaggio());
+				
 				if (other!=null) {
 					updateChatGridData(other);
 				}

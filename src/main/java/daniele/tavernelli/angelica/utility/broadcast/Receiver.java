@@ -44,9 +44,9 @@ public class Receiver implements Serializable {
 
 				String[] messageSplitted = message.split("#");
 
-				long id_mittente = Long.parseLong(messageSplitted[1]);
+				Integer id_mittente = Integer.parseInt(messageSplitted[1]);
 
-				long id_destinatario = Long.parseLong(messageSplitted[2]);
+				Integer id_destinatario = Integer.parseInt(messageSplitted[2]);
 
 				if (id_destinatario==userLogged.getUtente().getIdUtente()) {
 					notificaNuovoMessaggioRicevuto(id_mittente);
@@ -67,7 +67,7 @@ public class Receiver implements Serializable {
 
 	}
 
-	private void notificaNuovoMessaggioRicevuto(long id_mittente) {
+	private void notificaNuovoMessaggioRicevuto(Integer id_mittente) {
 
 		
 		if (chatWindow.isVisible() && chatWindow.other!=null) {

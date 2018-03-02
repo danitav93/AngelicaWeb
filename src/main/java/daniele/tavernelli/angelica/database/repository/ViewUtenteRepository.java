@@ -11,6 +11,8 @@ public interface ViewUtenteRepository extends PagingAndSortingRepository<ViewUte
 	ViewUtente findByUsername(String username);
 
 	List<ViewUtente> findByIdRuolo(int idRuolo);
+	
+	ViewUtente findByIdUtente(int idUtente);
 
 }
 

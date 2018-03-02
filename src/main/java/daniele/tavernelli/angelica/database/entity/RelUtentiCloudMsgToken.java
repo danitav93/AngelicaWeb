@@ -8,9 +8,8 @@ import javax.persistence.*;
  * The persistent class for the rel_utenti_cloud_msg_token database table.
  * 
  */
-@Entity
+@Entity(name="rel_utenti_cloud_msg_token")
 @Table(name="rel_utenti_cloud_msg_token")
-@NamedQuery(name="RelUtentiCloudMsgToken.findAll", query="SELECT r FROM RelUtentiCloudMsgToken r")
 public class RelUtentiCloudMsgToken implements Serializable {
 	private static final long serialVersionUID = 1L;
 

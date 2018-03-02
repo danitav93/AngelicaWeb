@@ -21,6 +21,10 @@ public class MessaggioService {
 	
 	@Autowired
 	private MessaggioRepository messaggioRepository;
+	
+	public Messaggio find(int id) {
+		return messaggioRepository.findByIdMessaggio(id);
+	}
 
 	public List<Messaggio> findAll() {
 		return  (List<Messaggio>) messaggioRepository.findAll();
@@ -30,8 +34,8 @@ public class MessaggioService {
 		messaggioRepository.save(messaggio);
 	}
 	
-	public void save(Messaggio messaggio) {
-		messaggioRepository.save(messaggio);
+	public Messaggio save(Messaggio messaggio) {
+		return messaggioRepository.save(messaggio);
 	}
 	
 	public void remove(Messaggio messaggio) {
@@ -56,10 +60,10 @@ public class MessaggioService {
 		return messaggionLetti!=null && messaggionLetti.size()>0;
 	}
 
-	public List<Long> getUtentiMessaggiNonLetti(long destinatario) {
+	public List<Integer> getUtentiMessaggiNonLetti(long destinatario) {
 		return  jdbcTemplate.query(
 				"SELECT DISTINCT id_mittente FROM messaggio where ( id_destinatario=?) AND letto=0",
-				(rs, rowNum) -> new Long(rs.getLong("id_mittente")),destinatario);
+				(rs, rowNum) -> new Integer(rs.getInt("id_mittente")),destinatario);
 	}
 
 	public void deleteAll() {
@@ -77,8 +81,8 @@ public class MessaggioService {
 		return messaggioRepository.findByMittenteDestinatario(mittente,destinatario,request);
 	}
 
-	public Messaggio getMessaggio(long id_messaggio) {
-		return messaggioRepository.findOne(id_messaggio);
+	public Messaggio getMessaggio(int id_messaggio) {
+		return messaggioRepository.findByIdMessaggio(id_messaggio);
 	}
 
 }

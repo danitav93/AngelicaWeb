@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import daniele.tavernelli.angelica.database.entity.Messaggio;
 import daniele.tavernelli.angelica.database.service.MessaggioService;
-import daniele.tavernelli.angelica.utility.broadcast.Broadcaster;
 import daniele.tavernelli.angelica.utility.broadcast.MessageBuilder;
+import daniele.tavernelli.angelica.utility.gestione.GestioneMessaggio;
 
 @RestController
 public class MessaggioController {
@@ -28,6 +28,11 @@ public class MessaggioController {
 	
 	@Autowired 
 	MessageBuilder messageBuilder;
+	
+	@Autowired
+	GestioneMessaggio gestioneMessaggio;
+	
+	
 	
 	
 	@RequestMapping(value=START_URI+"/chat",method=RequestMethod.GET)
@@ -44,9 +49,9 @@ public class MessaggioController {
 	public ResponseEntity<Boolean> login(@RequestBody Messaggio messaggio){
 		
 		try {
-			messaggioService.save(messaggio);
-	        Broadcaster.broadcast(messageBuilder.createChatMessage(messaggio.getIdMittente(),messaggio.getIdMessaggio()));
-			return ResponseEntity.status(HttpStatus.OK).body(true);
+			messaggio= messaggioService.save(messaggio);
+			gestioneMessaggio.inviaMessaggio(messaggio.getIdMittente(), messaggio.getIdDestinatario(), messaggio.getIdMessaggio());
+	        return ResponseEntity.status(HttpStatus.OK).body(true);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
@@ -55,11 +60,27 @@ public class MessaggioController {
 	
 	@RequestMapping(value=START_URI+"/get",method=RequestMethod.GET)
 	public @ResponseBody Messaggio get(
-			@RequestParam(name = "id_messaggio", defaultValue = "1") long id_messaggio
+			@RequestParam(name = "id_messaggio", defaultValue = "1") int id_messaggio
 			) {
  
 		return  messaggioService.getMessaggio(id_messaggio);	
 	}
 	
+	@RequestMapping(value=START_URI+"/setMessaggioLetto",method=RequestMethod.POST)
+	public ResponseEntity<Boolean> setMessaggioLetto(@RequestBody List<Integer> messaggiIds){
+		
+		try {
+			Messaggio messaggio;
+			for (Integer id: messaggiIds) {
+				messaggio=messaggioService.find(id);
+				messaggio.setLetto(1);
+				messaggioService.save(messaggio);
+			}
+	        return ResponseEntity.status(HttpStatus.OK).body(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
+		}
+	}
 
 }

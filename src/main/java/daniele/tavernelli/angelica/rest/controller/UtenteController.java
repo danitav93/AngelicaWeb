@@ -15,9 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.vaadin.external.org.slf4j.Logger;
 import com.vaadin.external.org.slf4j.LoggerFactory;
 
-import daniele.tavernelli.angelica.database.entity.RelUtentiCloudMsgToken;
 import daniele.tavernelli.angelica.database.entity.ViewUtente;
-import daniele.tavernelli.angelica.database.repository.RelUtentiCloudMsgTokenRepository;
+import daniele.tavernelli.angelica.database.service.RelUtentiCloudMsgTokenService;
 import daniele.tavernelli.angelica.database.service.ViewUtenteService;
 import daniele.tavernelli.angelica.utility.Constants;
 
@@ -32,18 +31,29 @@ public class UtenteController {
 	private ViewUtenteService viewUtenteService;
 	
 	@Autowired
-	private RelUtentiCloudMsgTokenRepository relUtentiCloudMsgTokenRepository;
+	private RelUtentiCloudMsgTokenService relUtentiCloudMsgTokenService;
 
 	@RequestMapping(value=START_URI+"/login",method=RequestMethod.POST)
-	public ResponseEntity<ViewUtente> login(@RequestBody ViewUtente viewUtente){
+	public ResponseEntity<ViewUtente> login(
+			@RequestBody ViewUtente viewUtente,
+			@RequestParam(name = "cmToken") String cmToken){
+		
+		
 		
 		ViewUtente viewUtenteFound= viewUtenteService.findByUsername(viewUtente.getUsername());
 		
 		if (viewUtenteFound!=null && viewUtenteFound.getPassword().equals(viewUtente.getPassword())) {
 			
 			log.info("Login: ok userId: "+viewUtenteFound.getIdUtente());
+			
+			if (cmToken!=null) {
+				
+				relUtentiCloudMsgTokenService.updateUserToken(viewUtenteFound,cmToken);
+				
+			}
 
 			return ResponseEntity.status(HttpStatus.OK).body(viewUtenteFound);
+			
 			
 		} else {
 			
@@ -58,13 +68,7 @@ public class UtenteController {
 	public ResponseEntity<ViewUtente> refreshToken(
 			@RequestParam(name = "refreshToken") String refreshToken,
 			@RequestParam(name = "idUtente") int idUtente){
-		
-			RelUtentiCloudMsgToken relUtentiCloudMsgToken= new RelUtentiCloudMsgToken();
-			relUtentiCloudMsgToken.setToken(refreshToken);
-			relUtentiCloudMsgToken.setU();
-		
-		
-			
+			relUtentiCloudMsgTokenService.updateUserToken(viewUtenteService.findByIdUtente(idUtente),refreshToken);
 			return ResponseEntity.noContent().build();
 			
 		

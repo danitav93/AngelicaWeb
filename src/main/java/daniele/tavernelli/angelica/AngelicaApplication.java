@@ -8,6 +8,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 
+import com.vaadin.external.org.slf4j.Logger;
+import com.vaadin.external.org.slf4j.LoggerFactory;
+
 import daniele.tavernelli.angelica.utility.automathic.AutomathicTaskExecutor;
 
 @SpringBootApplication
@@ -17,6 +20,7 @@ public class AngelicaApplication extends SpringBootServletInitializer {
 	private AutomathicTaskExecutor automathicTaskExecutor;
 	
 	private static AutomathicTaskExecutor staticAutomathicTaskExecutor;
+	
 	
 	@Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
@@ -30,7 +34,7 @@ public class AngelicaApplication extends SpringBootServletInitializer {
 
 	
 	public static void main(String[] args) {
-		
+				
 		SpringApplication.run(AngelicaApplication.class, args);
 		
 		//start the automatic actions

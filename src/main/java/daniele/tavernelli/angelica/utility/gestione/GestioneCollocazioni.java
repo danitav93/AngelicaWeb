@@ -89,15 +89,15 @@ public class GestioneCollocazioni implements Serializable {
 
 		collocazioneGrid.setColumnOrder("collocazione","piano","stanza","denominazione","note");
 
-		collocazioneGrid.getColumn("id_collocazione").setHidden(true);
+		collocazioneGrid.getColumn("idCollocazione").setHidden(true);
 
 		collocazioneGrid.getEditor().addSaveListener(event -> {
 			try {
 				serviceCollocazione.update(event.getBean());
-				log.info("Collocazione updated: id_collocazione"+event.getBean().getIdCollocazione()+" utente_id="+ userLogged.getUtente().getIdUtente()+" username="+userLogged.getUtente().getUsername());
+				log.info("Collocazione updated: idCollocazione"+event.getBean().getIdCollocazione()+" utente_id="+ userLogged.getUtente().getIdUtente()+" username="+userLogged.getUtente().getUsername());
 
 			} catch (Exception e) {
-				log.error("error Collocazione updated: id_collocazione "+event.getBean().getIdCollocazione()+" utente_id="+ userLogged.getUtente().getIdUtente()+" username="+userLogged.getUtente().getUsername(),e);
+				log.error("error Collocazione updated: idCollocazione "+event.getBean().getIdCollocazione()+" utente_id="+ userLogged.getUtente().getIdUtente()+" username="+userLogged.getUtente().getUsername(),e);
 				new LongNotification("Errore durante l'aggiornamento",Notification.Type.ERROR_MESSAGE).show(Page.getCurrent());;
 			}
 
@@ -118,10 +118,10 @@ public class GestioneCollocazioni implements Serializable {
 								try {
 									serviceCollocazione.remove((Collocazione)clickEvent.getItem());
 									updateCollocazioneGridData();
-									log.info("Collocazione deleted: id_collocazione "+((Collocazione)clickEvent.getItem()).getIdCollocazione()+" utente_id="+ userLogged.getUtente().getIdUtente()+" username="+userLogged.getUtente().getUsername());
+									log.info("Collocazione deleted: idCollocazione "+((Collocazione)clickEvent.getItem()).getIdCollocazione()+" utente_id="+ userLogged.getUtente().getIdUtente()+" username="+userLogged.getUtente().getUsername());
 
 								} catch (Exception e) {
-									log.error("Errore collocazione deleted: id_collocazione"+((Collocazione)clickEvent.getItem()).getIdCollocazione()+" utente_id="+ userLogged.getUtente().getIdUtente()+" username="+userLogged.getUtente().getUsername(),e);
+									log.error("Errore collocazione deleted: idCollocazione"+((Collocazione)clickEvent.getItem()).getIdCollocazione()+" utente_id="+ userLogged.getUtente().getIdUtente()+" username="+userLogged.getUtente().getUsername(),e);
 									Notification.show("Attenzione!","Errore durante l'eliminazione",Notification.Type.HUMANIZED_MESSAGE);
 								}
 							} else {
@@ -357,7 +357,7 @@ public class GestioneCollocazioni implements Serializable {
 				}
 				catch (Exception e) {
 					new LongNotification("Attenzione, errore durante il salvataggio",Notification.Type.ERROR_MESSAGE).show(Page.getCurrent());
-					log.error("errore Collocazione added: id_collocazione= "+addCollocazioneBinder.getBean().getIdCollocazione()+" utente_id="+ userLogged.getUtente().getIdUtente()+" username="+userLogged.getUtente().getUsername(),e);
+					log.error("errore Collocazione added: idCollocazione= "+addCollocazioneBinder.getBean().getIdCollocazione()+" utente_id="+ userLogged.getUtente().getIdUtente()+" username="+userLogged.getUtente().getUsername(),e);
 
 				}
 			}

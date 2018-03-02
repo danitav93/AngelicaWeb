@@ -89,18 +89,18 @@ public class GestioneLegenda implements Serializable {
 
 		legendaGrid = new Grid<>(Legenda.class); 
 
-		legendaGrid.getColumn("id_legenda").setHidden(true);
+		legendaGrid.getColumn("idLegenda").setHidden(true);
 
 		legendaGrid.getColumn("simbolo").setHidden(true);
 
 		legendaGrid.getEditor().addSaveListener(event -> {
 			try {
 				serviceLegenda.update(event.getBean());
-				log.info("Legenda updated: id_legenda"+event.getBean().getIdLegenda()+" utente_id="+ userLogged.getUtente().getIdUtente()+" username="+userLogged.getUtente().getUsername());
+				log.info("Legenda updated: idLegenda"+event.getBean().getIdLegenda()+" utente_id="+ userLogged.getUtente().getIdUtente()+" username="+userLogged.getUtente().getUsername());
 			} catch (Exception e) {
 				e.printStackTrace();
 				new LongNotification("Errore durante l'aggiornamento",Notification.Type.ERROR_MESSAGE).show(Page.getCurrent());;
-				log.error("Legenda updated: id_legenda"+event.getBean().getIdLegenda()+" utente_id="+ userLogged.getUtente().getIdUtente()+" username="+userLogged.getUtente().getUsername());
+				log.error("Legenda updated: idLegenda"+event.getBean().getIdLegenda()+" utente_id="+ userLogged.getUtente().getIdUtente()+" username="+userLogged.getUtente().getUsername());
 
 			}
 		});
@@ -126,11 +126,11 @@ public class GestioneLegenda implements Serializable {
 								try {
 									serviceLegenda.remove((Legenda)clickEvent.getItem());
 									updateLegendaGridData();
-									log.info("Legenda removed: id_legenda"+((Legenda)clickEvent.getItem()).getIdLegenda()+" utente_id="+ userLogged.getUtente().getIdUtente()+" username="+userLogged.getUtente().getUsername());
+									log.info("Legenda removed: idLegenda"+((Legenda)clickEvent.getItem()).getIdLegenda()+" utente_id="+ userLogged.getUtente().getIdUtente()+" username="+userLogged.getUtente().getUsername());
 
 								} catch (Exception e) {
 									e.printStackTrace();
-									log.error("errore Legenda removed: id_legenda"+((Legenda)clickEvent.getItem()).getIdLegenda()+" utente_id="+ userLogged.getUtente().getIdUtente()+" username="+userLogged.getUtente().getUsername());
+									log.error("errore Legenda removed: idLegenda"+((Legenda)clickEvent.getItem()).getIdLegenda()+" utente_id="+ userLogged.getUtente().getIdUtente()+" username="+userLogged.getUtente().getUsername());
 									new LongNotification("Errore durante l'eliminazione",Notification.Type.ERROR_MESSAGE).show(Page.getCurrent());;
 								}
 							} else {
